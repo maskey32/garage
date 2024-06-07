@@ -27,11 +27,14 @@ const posts: IPostMethods = {
     update: (data: IpostRequestBody): IPost => {
         const { postId, title, content } = data;
 
-        let post = postsArray.find(post => post.postId === postId) as IPost;
+        const post = postsArray.find(post => post.postId === postId) as IPost;
+        const postIndex = postsArray.findIndex(post => post.postId === postId);
 
-        post = { ...post, title,  content };
+        const updatedPost = { ...post, title,  content };
 
-        return post;
+        postsArray.splice(postIndex, 1, updatedPost);
+
+        return updatedPost;
     },
     delete: (data: { postId: string }): IPost => {
         const postIndex = postsArray.findIndex(post => post.postId !== data.postId);
