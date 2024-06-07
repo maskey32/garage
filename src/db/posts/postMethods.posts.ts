@@ -1,29 +1,38 @@
 import postsData from "./postsData.json";
 import generateUUID from "../../common/utils/uuid.utils";
 
-const postsArray: IPosts[] = postsData;
+const postsArray: IPost[] = postsData;
 
 const posts: IPostMethods = {
-    findOne: (query) => {
-        const { title, id } = query;
+    findOne: (query): IPost | undefined => {
+        const { title, postId } = query;
 
         if (title) {
             return postsArray.find(post => post.title === title);
         }
 
-        if (id) {
-            return postsArray.find(post => post.id === id);
+        if (postId) {
+            return postsArray.find(post => post.postId === postId);
         }
     },
-    create: (data) => {
+    create: (data): IPost => {
         const postId = generateUUID();
-        const newPost = { ...data, id: postId, creationDate: new Date() };
+        const newPost = { ...data, postId, creationDate: new Date() };
 
         postsArray.push(newPost);
 
         return newPost;
     },
-    getAllPosts: () => postsArray
+    getAllPosts: (): IPost[] => postsArray,
+    update: (data: IpostRequestBody): IPost => {
+        const { postId, title, content } = data;
+
+        let post = postsArray.find(post => post.postId === postId) as IPost;
+
+        post = { ...post, title,  content };
+
+        return post;
+    }
 };
 
 export default posts;

@@ -5,13 +5,13 @@ import { ServiceWrapper } from "../services/index.services";
 const postsControllers = {
     createPost: (req: Request, res: Response): void => {
         try {
-          const data: IPosts = {
+          const data: IpostRequestBody = {
             title: req.body.title.trim().toUpperCase(),
             content: req.body.content.trim().toUpperCase(),
             author: req.body.author.trim().toUpperCase(),
           }
     
-          ServiceWrapper.executeWithErrorHandling(res, async () => {
+          ServiceWrapper.executeWithErrorHandling(res, () => {
             const post = ServiceWrapper
               .getPostService()
               .createPost(data);
@@ -30,7 +30,7 @@ const postsControllers = {
     },
     getPosts: (req: Request, res: Response): void => {
         try {
-          ServiceWrapper.executeWithErrorHandling(res, async () => {
+          ServiceWrapper.executeWithErrorHandling(res, () => {
             const allPosts = ServiceWrapper
               .getPostService()
               .getPosts();
@@ -50,7 +50,7 @@ const postsControllers = {
     },
     getPost: (req: Request, res: Response): void => {
         try {
-          ServiceWrapper.executeWithErrorHandling(res, async () => {
+          ServiceWrapper.executeWithErrorHandling(res, () => {
             const post = ServiceWrapper
               .getPostService()
               .getPost(req.params);
@@ -67,6 +67,27 @@ const postsControllers = {
           });
         }
     },
+    updatePost: (req: Request, res: Response): void => {
+      try {   
+        const data = { ...req.params, ...req.body };  
+          
+        ServiceWrapper.executeWithErrorHandling(res, () => {
+          const updatedPost = ServiceWrapper
+          .getPostService()
+          .updatePost(data);
+
+          res.status(200).json({
+            message: "Post successfully updated",
+            data: updatedPost
+          });
+        })
+      } catch (e: any) {
+        res.status(500).json({
+          message: "Sever error, failed to retrieve users",
+          route: req.originalUrl,
+        });
+      }
+  },
 };
 
 export default postsControllers;

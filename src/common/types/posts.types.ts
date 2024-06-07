@@ -1,13 +1,18 @@
-interface IPosts {
-    "id"?: string;
-    "title": string;
-    "content": string;
-    "author": string;
-    "creationDate"?: Date;
+interface IpostRequestBody {
+    postId?: string;
+    title: string;
+    content: string;
+    author: string;
+}
+
+interface IPost extends IpostRequestBody {
+    postId: string;
+    creationDate: Date;
 }
 
 interface IPostMethods {
-    findOne: (query: { title?: string, id?: string }) => IPosts | undefined;
-    create: (data: IPosts) => IPosts;
-    getAllPosts: () => IPosts[];
+    findOne: (query: { title?: string, postId?: string }) => IPost | undefined;
+    create: (data: IpostRequestBody) => IPost;
+    getAllPosts: () => IPost[];
+    update: (data: IpostRequestBody) => IPost 
 }

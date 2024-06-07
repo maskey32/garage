@@ -5,3 +5,9 @@ export const createPostSchema = Joi.object().keys({
     content: Joi.string().required(),
     author: Joi.number().required(),
 });
+
+export const updatePostSchema = Joi.object().keys({
+    title: Joi.string().required(),
+    content: Joi.string().required(),
+});
+
