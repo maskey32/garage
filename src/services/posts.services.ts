@@ -40,19 +40,34 @@ const postsServices = {
     },
     updatePost: (data: IpostRequestBody): IPost => {
         try {
-          const { postId } = data;
-  
-          const post = posts.findOne({ postId });        
-  
-          if (!post) throw new InvalidDataResponse("Post does not exist");
-  
-          const updatedPost = posts.update(data);      
-        
-          return updatedPost;
+            const { postId } = data;
+    
+            const post = posts.findOne({ postId });        
+    
+            if (!post) throw new InvalidDataResponse("Post does not exist");
+    
+            const updatedPost = posts.update(data);      
+            
+            return updatedPost;
         } catch (e: any) {
-          throw new BadRequestResponse(e?.message || "Server error");
+            throw new BadRequestResponse(e?.message || "Server error");
         }
-      },
+    },
+    deletePost: (data: Record<string, string>): IPost => {
+        try {        
+            const { postId } = data;
+    
+            const post = posts.findOne({ postId });   
+    
+            if (!post) throw new InvalidDataResponse("Post does not exist");
+    
+            const deletedPost = posts.delete({ postId });           
+            
+            return deletedPost;
+        } catch (e: any) {
+            throw new BadRequestResponse(e?.message || "Server error");
+        }
+    },  
 };
 
 export default postsServices;

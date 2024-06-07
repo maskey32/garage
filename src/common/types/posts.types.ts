@@ -14,5 +14,6 @@ interface IPostMethods {
     findOne: (query: { title?: string, postId?: string }) => IPost | undefined;
     create: (data: IpostRequestBody) => IPost;
     getAllPosts: () => IPost[];
-    update: (data: IpostRequestBody) => IPost 
+    update: (data: IpostRequestBody) => IPost;
+    delete: (data: { postId: string }) => IPost;
 }

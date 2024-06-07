@@ -32,6 +32,13 @@ const posts: IPostMethods = {
         post = { ...post, title,  content };
 
         return post;
+    },
+    delete: (data: { postId: string }): IPost => {
+        const postIndex = postsArray.findIndex(post => post.postId !== data.postId);
+
+        const deletedPostArray = postsArray.splice(postIndex, 1);
+
+        return deletedPostArray[0];
     }
 };
 

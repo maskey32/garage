@@ -10,5 +10,6 @@ postsRoutes.post("/", validateRequest(createPostSchema), postsControllers.create
 postsRoutes.get("/", postsControllers.getPosts);
 postsRoutes.get("/:postId", postsControllers.getPost);
 postsRoutes.put("/:postId", validateRequest(updatePostSchema), postsControllers.updatePost);
+postsRoutes.delete("/:postId", postsControllers.deletePost);
 
 export default postsRoutes;

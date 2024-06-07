@@ -83,11 +83,30 @@ const postsControllers = {
         })
       } catch (e: any) {
         res.status(500).json({
-          message: "Sever error, failed to retrieve users",
+          message: "Server error, failed to retrieve users",
           route: req.originalUrl,
         });
       }
   },
+  deletePost: (req: Request, res: Response): void => {
+    try {                                   
+      ServiceWrapper.executeWithErrorHandling(res, () => {
+        const deletedPost = ServiceWrapper
+        .getPostService()
+        .deletePost(req.params);
+
+        res.status(204).json({
+          message: "Post successfully deleted",
+          data: deletedPost
+        });
+      })
+    } catch (e: any) {
+      res.status(500).json({
+        message: "Server error, failed to retrieve users",
+        route: req.originalUrl,
+      });
+    }
+},
 };
 
 export default postsControllers;
