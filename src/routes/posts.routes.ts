@@ -7,5 +7,6 @@ import { createPostSchema } from "../common/validation/posts.validation";
 const postsRoutes = express.Router();
 
 postsRoutes.post("/", validateRequest(createPostSchema), postsControllers.createPost);
+postsRoutes.get("/", postsControllers.getPosts);
 
 export default postsRoutes;

@@ -17,6 +17,7 @@ const posts: IPostMethods = {
 
         return newPost;
     },
+    getAllPosts: () => postsArray
 };
 
 export default posts;

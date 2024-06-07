@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { ServiceWrapper } from "../services/index.services";
 
 const postsControllers = {
-    createPost: async (req: Request, res: Response): Promise<void> => {
+    createPost: (req: Request, res: Response): void => {
         try {
           const data: IPosts = {
             title: req.body.title.trim().toUpperCase(),
@@ -12,7 +12,7 @@ const postsControllers = {
           }
     
           ServiceWrapper.executeWithErrorHandling(res, async () => {
-            const post = await ServiceWrapper
+            const post = ServiceWrapper
               .getPostService()
               .createPost(data);
     
@@ -23,11 +23,32 @@ const postsControllers = {
           })
         } catch (e: any) {
           res.status(500).json({
-            message: "Sever error, failed to create post",
+            message: "Server error, failed to create post",
             route: req.originalUrl,
           });
         }
     },
+    getPosts: (req: Request, res: Response): void => {
+        try {
+          ServiceWrapper.executeWithErrorHandling(res, async () => {
+            const allPosts = ServiceWrapper
+              .getPostService()
+              .getPosts();
+    
+            res.status(200).json({
+              message: "Posts successfully retrieved",
+              data: allPosts,
+              totalNumberOfPosts: allPosts.length,
+            });
+          })
+        } catch (e: any) {
+          res.status(500).json({
+            message: "Server error, failed to retrieve posts",
+            route: req.originalUrl,
+          });
+        }
+      },
+    
 };
 
 export default postsControllers;

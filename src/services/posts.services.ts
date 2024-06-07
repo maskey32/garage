@@ -18,6 +18,13 @@ const postsServices = {
             throw new BadRequestResponse(e?.message || "Server error");
         }
     },
+    getPosts: (): IPosts[] => {
+        try {
+            return posts.getAllPosts();
+        } catch (e: any) {
+          throw new BadRequestResponse(e?.message || "Server error");
+        }
+      },
 };
 
 export default postsServices;

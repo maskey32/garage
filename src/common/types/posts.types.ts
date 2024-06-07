@@ -9,4 +9,5 @@ interface IPosts {
 interface IPostMethods {
     findOne: (query: { title: string }) => IPosts | undefined;
     create: (data: IPosts) => IPosts;
+    getAllPosts: () => IPosts[];
 }
