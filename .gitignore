@@ -1,0 +1,13 @@
+/node_modules
+
+# Compiling directories
+/build
+
+# Editor directories and files
+/.vscode
+
+# Environment files
+.env
+
+# API Testing Environment
+api.http*
