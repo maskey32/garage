@@ -22,9 +22,22 @@ const postsServices = {
         try {
             return posts.getAllPosts();
         } catch (e: any) {
-          throw new BadRequestResponse(e?.message || "Server error");
+            throw new BadRequestResponse(e?.message || "Server error");
         }
-      },
+    },
+    getPost: (data: Record<string, string>): IPosts => {
+        try {
+            const { id } = data;
+
+            const post = posts.findOne({ id });
+
+            if (!post) throw new InvalidDataResponse("Post does not exist");
+
+            return post;
+        } catch (e: any) {
+            throw new BadRequestResponse(e?.message || "Server error");
+        }
+    },
 };
 
 export default postsServices;

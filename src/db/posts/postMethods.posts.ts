@@ -5,9 +5,15 @@ const postsArray: IPosts[] = postsData;
 
 const posts: IPostMethods = {
     findOne: (query) => {
-        const { title } = query;
+        const { title, id } = query;
 
-        return postsArray.find(post => post.title === title);
+        if (title) {
+            return postsArray.find(post => post.title === title);
+        }
+
+        if (id) {
+            return postsArray.find(post => post.id === id);
+        }
     },
     create: (data) => {
         const postId = generateUUID();

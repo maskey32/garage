@@ -47,8 +47,26 @@ const postsControllers = {
             route: req.originalUrl,
           });
         }
-      },
+    },
+    getPost: (req: Request, res: Response): void => {
+        try {
+          ServiceWrapper.executeWithErrorHandling(res, async () => {
+            const post = ServiceWrapper
+              .getPostService()
+              .getPost(req.params);
     
+            res.status(200).json({
+              message: "Post successfully retrieved",
+              data: post,
+            });
+          })
+        } catch (e: any) {
+          res.status(500).json({
+            message: "Server error, failed to retrieve posts",
+            route: req.originalUrl,
+          });
+        }
+    },
 };
 
 export default postsControllers;
